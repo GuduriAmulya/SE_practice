@@ -5,3 +5,53 @@ siri
 ehhhh
 
 heeeehee
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+pipeline
+pipeline {
+    agent any
+    tools{
+        maven 'MAVEN_HOME'
+    }
+    stages {
+        stage('git repo & clean') {
+            steps {
+                //bat "rmdir  /s /q MavenJavaProj"
+                bat "git clone https://github.com/GuduriAmulya/MavenJavaProj.git"
+                bat "mvn clean -f MavenJavaProj"
+            }
+        }
+        stage('install') {
+            steps {
+                bat "mvn install -f MavenJavaProj" 
+            }
+        }
+        stage('test') {
+            steps {
+                bat "mvn test -f MavenJavaProj"
+            }
+        }
+        stage('package') {
+            steps {
+                bat "mvn package -f MavenJavaProj"
+            }
+        }
+    }
+}
